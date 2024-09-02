@@ -5,10 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
@@ -18,20 +15,16 @@ public class User {
 	
 	protected User()
 	{}
-	
+
 	@Id
-	@GeneratedValue
-	private Integer id;
-	@Size(min=2, message = "Name should have atleast 2 characters")
-	private String name;
-	@Past(message = "Birth Date should be in the past")
+	private String userName;
 	private LocalDate birthDate;
+	private String password;
 	
-	public User(Integer id, String name, LocalDate birthDate) {
-		super();
-		this.id = id;
-		this.name = name;
+	public User(String userName, LocalDate birthDate, String password) {
+		this.userName = userName;
 		this.birthDate = birthDate;
+		this.password = password;
 	}
 	
 	@OneToMany(mappedBy = "user")
@@ -45,23 +38,13 @@ public class User {
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
-	
-	
 
-	public Integer getId() {
-		return id;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public LocalDate getBirthDate() {
@@ -71,10 +54,17 @@ public class User {
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
-	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", birthDate=" + birthDate + "]";
+		return "User [userName=" + userName + ", birthDate=" + birthDate + "]";
 	}
 }

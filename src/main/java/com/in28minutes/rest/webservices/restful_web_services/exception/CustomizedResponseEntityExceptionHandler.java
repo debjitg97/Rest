@@ -2,6 +2,7 @@ package com.in28minutes.rest.webservices.restful_web_services.exception;
 
 import java.time.LocalDateTime;
 
+import com.in28minutes.rest.webservices.restful_web_services.user.DuplicateUserNameException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -33,6 +34,15 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		
 		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.NOT_FOUND);
 		
+	}
+
+	@ExceptionHandler(DuplicateUserNameException.class)
+	public final ResponseEntity<ErrorDetails> handleDuplicateUserNameException(Exception ex, WebRequest request) throws Exception {
+		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(),
+				ex.getMessage(), request.getDescription(false));
+
+		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.BAD_REQUEST);
+
 	}
 	
 	@Override
